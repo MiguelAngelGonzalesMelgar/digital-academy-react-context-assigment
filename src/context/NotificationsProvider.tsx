@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { NotificationsContext, type Notification, type NotificationType } from "./NotificationsContext";
 
 interface NotificationsProviderProps {
@@ -8,6 +8,14 @@ interface NotificationsProviderProps {
 export const NotificationsProvider = ({children}: NotificationsProviderProps) => {
   const [notificationQueue, setNotificationQueue] = useState<Notification[]>([]);
   const [currentNotification, setCurrentNotification] = useState<Notification | null>(null);
+  
+  const processQueue = useCallback(() => {
+    if (!currentNotification && notificationQueue.length > 0) {
+      const [nextNotification, ...rest] = notificationQueue;
+      setCurrentNotification(nextNotification);
+      setNotificationQueue(rest);
+    }
+  }, [currentNotification, notificationQueue])
 
   const showNotification = (message: string, type: NotificationType) => {
     setNotificationQueue(prevQueue => [...prevQueue, {message, type}]);
@@ -18,14 +26,8 @@ export const NotificationsProvider = ({children}: NotificationsProviderProps) =>
   };
 
   useEffect(() => {
-    if (!currentNotification && notificationQueue.length > 0) { 
-      setCurrentNotification(notificationQueue[0]);
-      setNotificationQueue(prev => {
-        const [, ...rest] = prev;
-        return rest;
-      });
-    }
-  }, [notificationQueue, currentNotification]);
+    processQueue();
+  }, [notificationQueue, currentNotification, processQueue]);
 
   useEffect(() => {
     if (!currentNotification) {

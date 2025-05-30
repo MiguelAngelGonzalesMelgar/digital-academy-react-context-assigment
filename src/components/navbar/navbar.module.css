@@ -1,4 +1,5 @@
 .header {
+  position: relative; /* needed to position the notification absolutely inside */
   background-color: #a8e6cf;
   color: white;
   padding: 16px 24px;
@@ -8,4 +9,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.notification {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  background-color: #ff8b94;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-weight: bold;
+  z-index: 100;
 }
