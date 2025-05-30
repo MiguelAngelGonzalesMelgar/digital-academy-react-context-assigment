@@ -25,7 +25,7 @@ const Notification = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -5 }}
           transition={{ duration: 0.3 }}
-          key={message} // helps AnimatePresence detect change
+          key={message}
         >
           <button
             className={styles.closeButton}

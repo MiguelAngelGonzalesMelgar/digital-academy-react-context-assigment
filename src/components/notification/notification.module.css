@@ -1,4 +1,4 @@
-
+/* 
 .notification {
   position: fixed;
   top: 10px;
@@ -11,7 +11,7 @@
   z-index: 1000;
   transition: opacity 0.3s ease;
 }
-
+*/
 .notificationMessage {
   margin: 0;
 }
@@ -39,5 +39,30 @@
   right: 5px;
   font-size: 1.2rem;
   margin-bottom: 15px;
-  color: inherit;
+  color: white;
+}
+
+.notificationContainer {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;         
+  width: 320px;       
+  z-index: 9999;
+  pointer-events: none; 
+}
+
+.notification {
+  pointer-events: auto; 
+  background-color: #fff;
+  padding: 12px 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  color: white;
 }

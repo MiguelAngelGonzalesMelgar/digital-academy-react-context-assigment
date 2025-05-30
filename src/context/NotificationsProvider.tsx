@@ -1,51 +1,37 @@
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { NotificationsContext, type Notification, type NotificationType } from "./NotificationsContext";
+import NotificationsList from "../components/notification/notificationList";
 
 interface NotificationsProviderProps {
   children: ReactNode;
 }
 
-export const NotificationsProvider = ({children}: NotificationsProviderProps) => {
-  const [notificationQueue, setNotificationQueue] = useState<Notification[]>([]);
-  const [currentNotification, setCurrentNotification] = useState<Notification | null>(null);
-  
-  const processQueue = useCallback(() => {
-    if (!currentNotification && notificationQueue.length > 0) {
-      const [nextNotification, ...rest] = notificationQueue;
-      setCurrentNotification(nextNotification);
-      setNotificationQueue(rest);
-    }
-  }, [currentNotification, notificationQueue])
+export const NotificationsProvider = ({ children }: NotificationsProviderProps) => {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   const showNotification = (message: string, type: NotificationType) => {
-    setNotificationQueue(prevQueue => [...prevQueue, {message, type}]);
-  };
+    const newNotification = { message, type };
+    setNotifications(prev => [...prev, newNotification]);
 
-  const clearNotification = () => {
-    setCurrentNotification(null);
-  };
-
-  useEffect(() => {
-    processQueue();
-  }, [notificationQueue, currentNotification, processQueue]);
-
-  useEffect(() => {
-    if (!currentNotification) {
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      clearNotification();
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n !== newNotification));
     }, 3000);
+  };
 
-    return () => clearTimeout(timer);
-  }, [currentNotification]);
+  const clearNotification = (message: string) => {
+    setNotifications(prev => prev.filter(n => n.message !== message));
+  };
 
   return (
     <NotificationsContext.Provider
-    value={{notification:currentNotification, showNotification, clearNotification}}
+      value={{
+        notification: null, 
+        showNotification,
+        clearNotification: () => {},
+      }}
     >
       {children}
+      <NotificationsList notifications={notifications} onClear={clearNotification} />
     </NotificationsContext.Provider>
-  )
-}
+  );
+};
