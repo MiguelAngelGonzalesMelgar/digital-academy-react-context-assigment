@@ -5,14 +5,14 @@
   left: 150px;
   transform: translateX(-50%);
   color: white;
-  padding: 12px 24px;
+  padding: 24px 24px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   transition: opacity 0.3s ease;
 }
 
-.notification-message {
+.notificationMessage {
   margin: 0;
 }
 
@@ -28,4 +28,16 @@
 }
 .notification.custom {
   background-color: #6f42c1;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: inherit;
 }
