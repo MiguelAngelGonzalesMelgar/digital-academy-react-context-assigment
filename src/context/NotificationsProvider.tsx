@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { NotificationsContext, type Notification, type NotificationType } from "./NotificationsContext";
-import NotificationsList from "../components/notification/notificationList";
+import NotificationsList from "../components/notification/NotificationList"
 
 interface NotificationsProviderProps {
   children: ReactNode;
