@@ -1,6 +1,6 @@
 import './App.css'
 import Notification from './components/notification/Notification'
-import TriggerButton from './components/triggerButton/triggerButton'
+import TriggerButton from './components/triggerButton/TriggerButton';
 import { NotificationsProvider } from './context/NotificationsProvider'
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <NotificationsProvider>
       <Notification />
       <main>
-        <h2>Welcome to My App</h2>
+        <h2>Notification System</h2>
         <TriggerButton />
       </main>
     </NotificationsProvider>
