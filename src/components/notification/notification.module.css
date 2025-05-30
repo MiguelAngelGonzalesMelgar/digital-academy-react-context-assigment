@@ -16,3 +16,17 @@
 .notification-message {
   margin: 0;
 }
+
+.notification.info {
+  background-color: #007bff;
+}
+.notification.warning {
+  background-color: #ffc107;
+  color: black;
+}
+.notification.error {
+  background-color: #dc3545;
+}
+.notification.custom {
+  background-color: #6f42c1;
+}
