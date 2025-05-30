@@ -6,18 +6,29 @@ interface NotificationsProviderProps {
 }
 
 export const NotificationsProvider = ({children}: NotificationsProviderProps) => {
-  const [notification, setNotification] = useState<Notification | null>(null);
+  const [notificationQueue, setNotificationQueue] = useState<Notification[]>([]);
+  const [currentNotification, setCurrentNotification] = useState<Notification | null>(null);
 
   const showNotification = (message: string, type: NotificationType) => {
-    setNotification({message, type});
+    setNotificationQueue(prevQueue => [...prevQueue, {message, type}]);
   };
 
   const clearNotification = () => {
-    setNotification(null);
+    setCurrentNotification(null);
   };
 
   useEffect(() => {
-    if (!notification) { 
+    if (!currentNotification && notificationQueue.length > 0) { 
+      setCurrentNotification(notificationQueue[0]);
+      setNotificationQueue(prev => {
+        const [, ...rest] = prev;
+        return rest;
+      });
+    }
+  }, [notificationQueue, currentNotification]);
+
+  useEffect(() => {
+    if (!currentNotification) {
       return;
     }
 
@@ -26,11 +37,11 @@ export const NotificationsProvider = ({children}: NotificationsProviderProps) =>
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [notification]);
+  }, [currentNotification]);
 
   return (
     <NotificationsContext.Provider
-    value={{notification, showNotification, clearNotification}}
+    value={{notification:currentNotification, showNotification, clearNotification}}
     >
       {children}
     </NotificationsContext.Provider>
