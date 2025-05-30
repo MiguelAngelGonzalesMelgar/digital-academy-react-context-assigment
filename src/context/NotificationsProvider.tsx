@@ -14,12 +14,12 @@ export const NotificationsProvider = ({ children }: NotificationsProviderProps) 
     setNotifications(prev => [...prev, newNotification]);
 
     setTimeout(() => {
-      setNotifications(prev => prev.filter(n => n !== newNotification));
+      setNotifications(prev => prev.filter(notification => notification !== newNotification));
     }, 3000);
   };
 
   const clearNotification = (message: string) => {
-    setNotifications(prev => prev.filter(n => n.message !== message));
+    setNotifications(prev => prev.filter(notification => notification.message !== message));
   };
 
   return (

@@ -6,7 +6,7 @@ const TriggerButton2 = () => {
   const {showNotification} = useContext(NotificationsContext);
 
   const handleOnClick = (): void => {
-    showNotification("Navbar custom notification", "Custom")
+    showNotification("Info", "Info")
   }
   return (
     <button
